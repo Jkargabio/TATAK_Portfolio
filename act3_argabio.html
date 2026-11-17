@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Activity No. 3 - Photo Gallery</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px;
+            background-color: #e8f3ff;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            color: #003b73;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1769aa;
+            margin-bottom: 30px;
+        }
+
+        /* 5 COLUMNS x 4 ROWS */
+        .gallery {
+            width: 1060px;
+            margin: 0 auto;
+
+            display: grid;
+            grid-template-columns: repeat(5, 200px);
+            grid-template-rows: repeat(4, 200px);
+
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* EACH PHOTO = 200 x 200 */
+        .photo {
+            width: 200px;
+            height: 200px;
+
+            border: 3px solid #003b73;
+            border-radius: 10px;
+
+            overflow: hidden;
+            background-color: white;
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+            position: relative;
+        }
+
+        .photo img {
+            width: 200px;
+            height: 200px;
+
+            object-fit: cover;
+            display: block;
+        }
+
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            background-color: rgba(0, 45, 90, 0.88);
+            color: white;
+
+            text-align: center;
+
+            padding: 10px 3px;
+
+            font-size: 13px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>PHILIPPINES: PLACES WORTH VISITING</h1>
+
+    <h2>Photo Gallery of Beautiful Philippine Places</h2>
+
+    <div class="gallery">
+
+        <!-- 1. BANAUE RICE TERRACES -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Banaue%20RiceTerraces.jpg"
+                alt="Banaue Rice Terraces">
+            <div class="caption">Banaue Rice Terraces</div>
+        </div>
+
+
+        <!-- 2. EL NIDO -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/El%20Nido%2C%20Palawan%2C%20Philippines.jpg"
+                alt="El Nido Palawan">
+            <div class="caption">El Nido, Palawan</div>
+        </div>
+
+
+        <!-- 3. CHOCOLATE HILLS -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Chocolate%20Hills%2C%20Bohol%2C%20Philippines.jpg"
+                alt="Chocolate Hills">
+            <div class="caption">Chocolate Hills, Bohol</div>
+        </div>
+
+
+        <!-- 4. PUERTO PRINCESA UNDERGROUND RIVER -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Puerto%20Princesa%20Subterranean%20River%20Cave%2C%20Stalactites%2C%20Palawan%2C%20Philippines.jpg"
+                alt="Puerto Princesa Underground River">
+            <div class="caption">Puerto Princesa Underground River</div>
+        </div>
+
+
+        <!-- 5. VIGAN -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Vigan%20Calle%20Crisologo.jpg"
+                alt="Vigan Calle Crisologo">
+            <div class="caption">Vigan City</div>
+        </div>
+
+
+        <!-- 6. BORACAY -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/White%20Beach%20at%20Boracay.jpg"
+                alt="Boracay White Beach">
+            <div class="caption">Boracay Island</div>
+        </div>
+
+
+        <!-- 7. MAYON VOLCANO -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Mayon%20Volcano%20Bicol%20Philippines.jpg"
+                alt="Mayon Volcano">
+            <div class="caption">Mayon Volcano</div>
+        </div>
+
+
+        <!-- 8. FORT SANTIAGO -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Fort%20Santiago-Manila.JPG"
+                alt="Fort Santiago">
+            <div class="caption">Fort Santiago</div>
+        </div>
+
+
+        <!-- 9. RIZAL PARK -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Rizal%20Park%2C%20Manila.JPG"
+                alt="Rizal Park">
+            <div class="caption">Rizal Park</div>
+        </div>
+
+
+        <!-- 10. SAN AGUSTIN CHURCH -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/San%20Agustin%20Church%20in%20Manila.JPG"
+                alt="San Agustin Church">
+            <div class="caption">San Agustin Church</div>
+        </div>
+
+
+        <!-- 11. CORON -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Coral%20%26%20Limestone%2C%20Coron%20Island%2C%20Palawan%2C%20Philippines.jpg"
+                alt="Coron Island">
+            <div class="caption">Coron Island, Palawan</div>
+        </div>
+
+
+        <!-- 12. PAGUDPUD -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Pagudpud%20Beach.jpg"
+                alt="Pagudpud Beach">
+            <div class="caption">Pagudpud, Ilocos Norte</div>
+        </div>
+
+
+        <!-- 13. SAGADA -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Sagada%20Mountain%20Province.jpg"
+                alt="Sagada Mountain Province">
+            <div class="caption">Sagada, Mountain Province</div>
+        </div>
+
+
+        <!-- 14. SIARGAO -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Siargao%20island.jpg"
+                alt="Siargao Island">
+            <div class="caption">Siargao Island</div>
+        </div>
+
+
+        <!-- 15. INTRAMUROS -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Intramuros%20%2817267256746%29.jpg"
+                alt="Intramuros Manila">
+            <div class="caption">Intramuros, Manila</div>
+        </div>
+
+
+        <!-- 16. MOUNT APO -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Mount%20Apo%20view%20%28Davao%20City%3B%2011-26-2021%29.jpg"
+                alt="Mount Apo">
+            <div class="caption">Mount Apo</div>
+        </div>
+
+
+        <!-- 17. LAKE SEBU -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Lake%20Sebu%20%28from%20Punta%20Isla%29.JPG"
+                alt="Lake Sebu">
+            <div class="caption">Lake Sebu</div>
+        </div>
+
+
+        <!-- 18. DONSOL -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Donsol%20Philippines.jpg"
+                alt="Donsol Sorsogon">
+            <div class="caption">Donsol, Sorsogon</div>
+        </div>
+
+
+        <!-- 19. CEBU CITY -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Cebu%20City.jpg"
+                alt="Cebu City">
+            <div class="caption">Cebu City</div>
+        </div>
+
+
+        <!-- 20. BANGUI WIND FARM -->
+        <div class="photo">
+            <img
+                src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Bangui%20Wind%20Farm%20overlooking%20%28Bangui%2C%20Ilocos%20Norte%3B%2011-17-2022%29.jpg"
+                alt="Bangui Wind Farm">
+            <div class="caption">Bangui Wind Farm</div>
+        </div>
+
+    </div>
+
+</body>
+</html>

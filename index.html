@@ -1,1 +1,328 @@
-Tatak portfolio
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tatak: find the brand behind the tag</title>
+<meta name="description" content="Search clothing brands by the name on the neck tag. Find their website, Instagram, TikTok and shops in one place.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8ECF3;--card:#fff;--ink:#14204A;--mute:#59637F;--line:#C9D0E0;--acc:#F2C230;--accink:#14204A;--ok:#1B7F5C;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1426;--card:#18203A;--ink:#EEF1FA;--mute:#9AA5C4;--line:#2D3858;--acc:#F2C230;--accink:#14204A;--ok:#4FCB9C}}
+:root[data-theme="dark"]{--bg:#0E1426;--card:#18203A;--ink:#EEF1FA;--mute:#9AA5C4;--line:#2D3858;--acc:#F2C230;--accink:#14204A;--ok:#4FCB9C}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","DM Sans",sans-serif;line-height:1.1;margin:0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{font:800 22px "Bricolage Grotesque",sans-serif}
+.btn{border:2px solid var(--ink);background:transparent;border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:700}
+.btn.pri{background:var(--acc);color:var(--accink);border-color:var(--acc)}
+.hero{padding:28px 0 36px}
+.hero h1{font-size:clamp(34px,6vw,60px);font-weight:800;max-width:15ch}
+.hero p{color:var(--mute);max-width:52ch;margin:14px 0 24px}
+.tag{position:relative;background:var(--card);border:2px dashed var(--ink);border-radius:6px;padding:14px 18px 14px 56px;max-width:640px}
+.tag::before{content:"";position:absolute;left:18px;top:50%;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:var(--bg);border:2px solid var(--ink)}
+.tag label{display:block;font-size:13px;color:var(--mute)}
+.tag input{width:100%;border:0;background:transparent;font:700 24px "Bricolage Grotesque",sans-serif;padding:2px 0;outline:0}
+.tag:focus-within{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc)}
+.spot{display:flex;gap:18px;align-items:center;background:var(--ink);color:var(--bg);border-radius:12px;padding:20px;margin-bottom:34px;flex-wrap:wrap}
+:root[data-theme="dark"] .spot{background:var(--card);color:var(--ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .spot{background:var(--card);color:var(--ink)}}
+.spot .mark{width:64px;height:64px;font-size:26px}
+.spot small{color:var(--acc);font-weight:700}
+.spot h2{font-size:26px;margin:2px 0 4px}
+.spot p{margin:0;opacity:.85}
+.spot .btn{margin-left:auto;border-color:var(--acc);color:inherit}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.chip{border:2px solid var(--line);background:var(--card);border-radius:99px;padding:5px 14px;cursor:pointer;font-weight:500}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+select{background:var(--card);border:2px solid var(--line);border-radius:8px;padding:7px 10px}
+.count{color:var(--mute);margin:8px 0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;padding-bottom:40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:10px;text-align:left;cursor:pointer}
+.card:hover{border-color:var(--ink)}
+.top{display:flex;gap:12px;align-items:center}
+.mark{width:48px;height:48px;border-radius:10px;display:grid;place-items:center;font:800 18px "Bricolage Grotesque",sans-serif;color:#fff;flex:none}
+.card h3{font-size:19px}
+.meta{color:var(--mute);font-size:14px}
+.desc{font-size:15px;margin:0}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.b{font-size:12px;border:1px solid var(--line);border-radius:5px;padding:1px 7px;color:var(--mute)}
+.b.v{color:var(--ok);border-color:var(--ok)}.b.n{background:var(--acc);color:var(--accink);border-color:var(--acc);font-weight:700}
+.save{margin-left:auto;background:none;border:0;font-size:22px;cursor:pointer;line-height:1;color:var(--ink)}
+.empty{grid-column:1/-1;background:var(--card);border:2px dashed var(--line);border-radius:10px;padding:28px}
+dialog{border:0;border-radius:14px;padding:0;max-width:480px;width:calc(100% - 32px);background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(10,15,35,.6)}
+.dlg{padding:22px;display:flex;flex-direction:column;gap:12px}
+.links{display:flex;flex-direction:column;gap:8px}
+.links a{display:flex;justify-content:space-between;border:2px solid var(--line);border-radius:8px;padding:10px 14px;color:inherit;text-decoration:none;font-weight:700}
+.links a:hover{border-color:var(--ink)}
+form.dlg label{display:flex;flex-direction:column;gap:4px;font-size:14px;font-weight:700}
+form.dlg input,form.dlg select{border:2px solid var(--line);border-radius:8px;padding:9px 10px;background:var(--bg);font-weight:400}
+.row{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+footer{border-top:1px solid var(--line);padding:22px 0 30px;color:var(--mute);font-size:14px}
+[hidden]{display:none!important}
+.logo{display:flex;align-items:center;gap:8px;color:inherit;text-decoration:none}
+header{border-bottom:2px dashed var(--line);margin-bottom:8px;flex-wrap:wrap;gap:10px}
+nav{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+nav a{color:var(--mute);text-decoration:none;font-weight:500;padding:4px 0;border-bottom:2px solid transparent}
+nav a[aria-current]{color:var(--ink);border-color:var(--acc)}
+@media (hover:hover){nav a:hover{color:var(--ink);border-color:var(--acc)}}
+.hero{padding:40px 0 44px}
+.page{padding:32px 0 56px;max-width:780px}
+.page h1{font-size:clamp(30px,5vw,48px);font-weight:800;margin-bottom:14px}
+.page h2{font-size:22px;margin-bottom:12px}
+.lead{font-size:18px;color:var(--mute);max-width:56ch;margin:0 0 30px}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:24px;margin-bottom:30px}
+.cols h3{font-size:19px;margin-bottom:6px}.cols p{margin:0;color:var(--mute)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:32px;margin-bottom:30px}
+.steps{padding-left:22px;margin:0;display:flex;flex-direction:column;gap:12px}
+.steps li::marker{font-weight:800}
+footer a{color:inherit;margin-right:18px}
+#dlg{max-height:calc(100dvh - 32px);overflow:auto}
+.sub{font-size:15px;margin:6px 0 0;color:var(--mute)}
+.items{display:flex;flex-direction:column;gap:8px}
+.item{display:flex;gap:12px;align-items:center;border:2px solid var(--line);border-radius:8px;padding:8px 12px;color:inherit;text-decoration:none}
+.item:hover{border-color:var(--ink)}
+.item>span:nth-child(2){flex:1;line-height:1.3}
+.sw{width:40px;height:40px;border-radius:6px;flex:none}
+.back{display:inline-block;margin-bottom:18px;color:var(--mute);text-decoration:none;font-weight:700}
+.back:hover{color:var(--ink)}
+nav{gap:16px}
+header nav{margin:0 auto 0 14px}
+.dd{position:relative}
+.dd>button{background:none;border:0;border-bottom:2px solid transparent;padding:4px 0;color:var(--mute);font-weight:500;cursor:pointer}
+.dd>button::after{content:" \25BE";font-size:12px}
+.dd>button[aria-current]{color:var(--ink);border-color:var(--acc)}
+.dd>button[aria-expanded="true"]{color:var(--ink)}
+@media (hover:hover){.dd>button:hover{color:var(--ink);border-color:var(--acc)}}
+.menu{display:none;position:absolute;top:100%;left:0;margin-top:6px;min-width:210px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px;z-index:5;flex-direction:column}
+.dd>button[aria-expanded="true"]+.menu{display:flex}
+.menu a{padding:8px 12px;border:0!important;border-radius:6px;color:var(--ink)!important}
+.menu a:hover,.menu a[aria-current]{background:var(--bg)}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tabs a{border:2px solid var(--line);border-radius:99px;padding:4px 14px;color:var(--mute);text-decoration:none;font-weight:500}
+.tabs a[aria-current]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tl{list-style:none;padding:0;margin:0;border-left:2px dashed var(--line)}
+.tl li{padding:0 0 22px 22px;position:relative}
+.tl li::before{content:"";position:absolute;left:-8px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--acc);border:2px solid var(--ink)}
+.org{display:flex;flex-direction:column;align-items:center}
+.box{border:2px solid var(--ink);background:var(--card);border-radius:8px;padding:10px 16px;text-align:center}
+.lvl{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.steps .btn{margin-left:8px;padding:3px 12px}
+.wk{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:34px}
+.wcard{display:flex;flex-direction:column;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;color:inherit;text-decoration:none}
+.wcard:hover{border-color:var(--ink)}
+.wcard b{font:700 17px "Bricolage Grotesque",sans-serif}
+form.dlg textarea{border:2px solid var(--line);border-radius:8px;padding:9px 10px;background:var(--bg);font-weight:400;min-height:110px;resize:vertical}
+.bhead{display:flex;gap:16px;align-items:center;margin-bottom:14px}
+.bhead .mark{width:64px;height:64px;font-size:24px}
+.bhead h1{margin:0}
+#p-brand .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));margin-bottom:10px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><a class="logo" href="#home"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><path d="M3 3h20v14l-10 6L3 17z" fill="var(--acc)" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/><circle cx="13" cy="9" r="2.5" fill="var(--bg)" stroke="var(--ink)" stroke-width="1.5"/></svg>Tatak</a>
+<nav aria-label="Main">
+<div class="dd"><button aria-expanded="false" aria-haspopup="true">About</button><div class="menu"><a href="#history">History</a><a href="#org">Organizational chart</a><a href="#about">Profile</a></div></div>
+<div class="dd"><button aria-expanded="false" aria-haspopup="true">Portfolio</button><div class="menu"><a href="#activities">Activities</a><a href="#exercises">Exercises</a></div></div>
+<a href="#services">Services</a><a href="#contact">Contact</a></nav>
+<button class="btn pri" id="addBtn">List your brand</button></header>
+
+<div id="home">
+<section class="hero">
+<h1>Every TATAK has a story.</h1>
+<p>Love what someone’s wearing? Check the neck tag, type the name below, and find the brand, where it’s from, and where to shop it.</p>
+<div class="tag"><label for="q">Brand name on the tag</label><input id="q" type="search" placeholder="e.g. Salakot" autocomplete="off"></div>
+</section>
+
+<section class="spot" id="spot" aria-label="Brand of the day"></section>
+
+<div class="bar" id="styles" role="group" aria-label="Filter by style"></div>
+<div class="bar">
+<select id="city" aria-label="Location"><option value="">Any location</option></select>
+<select id="price" aria-label="Price range"><option value="">Any price</option><option value="1">₱ Budget</option><option value="2">₱₱ Mid</option><option value="3">₱₱₱ Premium</option></select>
+<select id="sort" aria-label="Sort"><option value="rel">Best match</option><option value="new">Newest first</option><option value="az">A to Z</option></select>
+<button class="chip" id="savedOnly" aria-pressed="false">♥ Saved</button>
+</div>
+<div class="count" id="count" aria-live="polite"></div>
+<div class="grid" id="grid"></div>
+</div>
+
+<section class="page" id="p-about" hidden><div class="tabs"></div>
+<h1>Small brands are hard to find. We fix that.</h1>
+<p class="lead">Tatak is a free directory of clothing brands. Spot a shirt you like, read the name on the tag, and we’ll show you who made it and where to shop it.</p>
+<div class="cols"><div><h3>What we do</h3><p>We gather brands in one place, with their website, socials, and shops. Every link goes to the brand itself.</p></div><div><h3>What we don’t do</h3><p>We don’t sell clothes or take payments. You buy straight from the brand, so there are no middlemen and no extra fees.</p></div><div><h3>Who it’s for</h3><p>Shoppers who want to find a brand, and new makers who want to be found.</p></div></div>
+<div class="cols"><div><h3>Mission</h3><p>Help people find the clothing brands behind the tags, and help small brands get found.</p></div><div><h3>Vision</h3><p>One place where every local clothing brand can be discovered.</p></div></div>
+</section>
+
+<section class="page" id="p-services" hidden>
+<h1>Our services</h1><p class="lead">Tatak helps shoppers find brands, and helps brands get found.</p>
+<div class="two">
+<div><h2>For shoppers</h2><ol class="steps"><li><b>Check the tag.</b> Find the brand name on the neck tag.</li><li><b>Type it in.</b> We’ll find it even if you misspell it a little.</li><li><b>Go to the brand.</b> Open its page and follow the links to its shop or socials.</li></ol></div>
+<div><h2>For brand owners</h2><ol class="steps"><li><b>List your brand.</b> Fill in a short form.</li><li><b>Get checked.</b> We review every brand to keep out fakes and copies.</li><li><b>Get found.</b> Show up in search, and in the New and Brand of the day spots.</li></ol></div>
+</div>
+<a class="btn pri" href="#home" style="text-decoration:none;display:inline-block">Search a brand</a> <a class="btn" href="#owners" style="text-decoration:none;display:inline-block">For brand owners</a>
+</section>
+
+<section class="page" id="p-owners" hidden>
+<h1>Let people find your brand</h1>
+<p class="lead">Just starting out? List your brand on Tatak and let shoppers find you by name.</p>
+<div class="cols"><div><h3>One page for all your links</h3><p>Your website, Instagram, TikTok, Facebook, and shop, together in one place.</p></div><div><h3>A spot for new brands</h3><p>Fresh listings get a New badge for two weeks, and verified brands take turns as Brand of the day.</p></div><div><h3>Free to start</h3><p>Listing is free for now. Featured spots may come later.</p></div></div>
+<button class="btn pri" id="ownersAdd">List your brand</button>
+</section>
+<section class="page" id="p-history" hidden><div class="tabs"></div>
+<h1>Our history</h1><p class="lead">Tatak started with a simple problem: you like a shirt, but you can’t find who made it.</p>
+<ul class="tl"><li><b>The idea.</b> Small clothing brands are hard to find, so we planned one place to search for them by the name on the neck tag.</li><li><b>The first website.</b> We built Tatak with brand search, brand pages, and a daily Brand of the day.</li><li><b>Presenting at school.</b> We’re showing the first version to our class and collecting feedback.</li><li><b>Next.</b> A database and brand sign-ups, so real brands can list themselves after a review.</li></ul></section>
+
+<section class="page" id="p-org" hidden><div class="tabs"></div>
+<h1>Organizational chart</h1><p class="lead">Who does what at Tatak.</p>
+<div class="org"><div class="box"><b>Founder and developer</b><br>Jake Argabio</div><div style="width:2px;height:22px;background:var(--ink)"></div>
+<div class="lvl"><div class="box"><b>Brand relations</b><br>Maria Santos</div><div class="box"><b>Design and content</b><br>Paolo Reyes</div><div class="box"><b>Data and testing</b><br>Angela Cruz</div></div></div></section>
+
+<section class="page" id="p-activities" hidden><div class="tabs"></div>
+<h1>Activities</h1><p class="lead">Our class activities. Tap one to open the page.</p><div class="wk" id="wkAct"></div><h2 style="margin:8px 0 14px">What we built for Tatak</h2>
+<div class="cols"><div><h3>Brand search</h3><p>Search by the name on the neck tag, even with a small typo.</p></div><div><h3>Brand of the day</h3><p>A fair daily rotation through verified brands.</p></div><div><h3>Brand pages</h3><p>Each brand gets a page with its pieces and links.</p></div><div><h3>Safe exits</h3><p>A notice before shoppers leave for a brand’s own site.</p></div><div><h3>Brand sign-up</h3><p>Brands can apply, and every listing is reviewed first.</p></div><div><h3>Class presentation</h3><p>Showing the first version and collecting feedback.</p></div></div></section>
+
+<section class="page" id="p-exercises" hidden><div class="tabs"></div>
+<h1>Exercises</h1><p class="lead">Our class exercises. Tap one to open the page.</p><div class="wk" id="wkExe"></div><h2 style="margin:8px 0 14px">Try Tatak yourself</h2><p class="meta" style="margin:0 0 14px">Each exercise below takes you to a Tatak feature and sets it up for you.</p>
+<ol class="steps"><li><b>Find a brand by its name.</b> Search “Salkot” with a spelling mistake. Tatak still finds Salakot Supply. <button class="btn" data-ex="q:Salkot">Try it</button></li><li><b>Browse by style.</b> Show only streetwear brands. <button class="btn" data-ex="st:Streetwear">Try it</button></li><li><b>Open a brand page.</b> See its pieces, then tap one to see the leaving-Tatak notice. <button class="btn" data-ex="brand:salakot-supply">Try it</button></li><li><b>List your own brand.</b> Fill in the short form and send it for review. <button class="btn" data-ex="list:">Try it</button></li></ol></section>
+
+<section class="page" id="p-contact" hidden>
+<h1>Contact and feedback</h1><p class="lead">Tell us what you think of Tatak, ask a question, or ask about listing your brand.</p>
+<form class="dlg" id="fbForm" style="padding:0;max-width:480px"><label>Your name<input required maxlength="60"></label><label>Email<input type="email" required></label><label>This is a<select><option>Feedback</option><option>Question</option><option>Brand inquiry</option></select></label><label>Message<textarea required maxlength="600"></textarea></label><div class="row" style="justify-content:flex-start"><button class="btn pri" type="submit">Send message</button></div></form></section>
+
+<section class="page" id="p-brand" hidden></section>
+</div>
+
+<footer><div class="wrap"><p style="margin:0 0 10px"><a href="#services">Services</a><a href="#owners">For brand owners</a><a href="#about">Profile</a><a href="#contact">Contact</a></p>Sample brands are made up for this demo. Every real listing is reviewed before it goes live.<br>© 2026 Tatak · Class project</div></footer>
+
+<dialog id="dlg"></dialog>
+<dialog id="addDlg">
+<form class="dlg" id="form" method="dialog">
+<h2>List your brand</h2>
+<label>Brand name<input name="name" required maxlength="40"></label>
+<label>City<input name="city" required maxlength="40" placeholder="Cebu City"></label>
+<label>Main style<select name="style"><option>Streetwear</option><option>Casual</option><option>Formal</option><option>Thrift</option><option>Modest</option><option>Sportswear</option></select></label>
+<label>Instagram handle<input name="ig" placeholder="@yourbrand"></label>
+<label>Website or shop link<input name="web" type="url" placeholder="https://"></label>
+<div class="row"><button type="button" class="btn" id="cancel">Cancel</button><button class="btn pri" type="submit">Send for review</button></div>
+</form>
+</dialog>
+<dialog id="goDlg"><div class="dlg"><h2>You’re leaving Tatak</h2><p id="goTxt" class="desc"></p><p class="meta" style="margin:0">You’ll buy straight from the brand. Tatak doesn’t handle payments or orders.</p><div class="row"><button class="btn" id="goNo">Stay here</button><button class="btn pri" id="goYes">Continue</button></div></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const COL=["#C2410C","#1D4ED8","#047857","#9D174D","#6D28D9","#B45309","#0E7490","#4D7C0F"];
+const brands=[
+{n:"Salakot Supply",c:"Cebu City",s:["Streetwear"],p:2,v:1,d:3,t:"Heavy cotton tees and caps inspired by farmers' hats and island life.",l:{ig:"@salakotsupply",web:"#",tt:"@salakotsupply"}},
+{n:"Habi Threads",c:"Manila",s:["Casual","Modest"],p:2,v:1,d:40,t:"Hand-woven fabrics made into easy everyday shirts and dresses.",l:{ig:"@habithreads",web:"#",shop:"#"}},
+{n:"Tamad Club",c:"Davao",s:["Streetwear"],p:1,v:0,d:1,t:"Oversized tees with jokes about lazy Sundays. Small-batch drops.",l:{ig:"@tamadclub",tt:"@tamadclub"}},
+{n:"Barong Bureau",c:"Manila",s:["Formal"],p:3,v:1,d:120,t:"Modern barongs and office wear with clean cuts.",l:{web:"#",ig:"@barongbureau",fb:"#"}},
+{n:"Ukay Atelier",c:"Cebu City",s:["Thrift"],p:1,v:1,d:15,t:"Curated, washed and mended thrift pieces sorted by size.",l:{ig:"@ukayatelier",shop:"#",fb:"#"}},
+{n:"Alon Active",c:"Cebu City",s:["Sportswear"],p:2,v:1,d:60,t:"Quick-dry running and surf wear for hot weather.",l:{web:"#",ig:"@alonactive"}},
+{n:"Lakas Loop",c:"Quezon City",s:["Streetwear","Sportswear"],p:2,v:0,d:6,t:"Gym tees and shorts made by a group of local trainers.",l:{ig:"@lakasloop",tt:"@lakasloop"}},
+{n:"Pinya Modest",c:"Davao",s:["Modest"],p:2,v:1,d:25,t:"Loose-fit tops and long skirts in pineapple-fibre blends.",l:{web:"#",ig:"@pinyamodest"}},
+{n:"Kanto Kids Club",c:"Iloilo",s:["Casual"],p:1,v:0,d:2,t:"Comfortable play clothes for kids, sold in bundles.",l:{fb:"#",shop:"#"}},
+{n:"Gabi Gabi",c:"Cebu City",s:["Casual","Streetwear"],p:1,v:0,d:9,t:"Night-market inspired graphics on soft, affordable tees.",l:{ig:"@gabigabi.ph",tt:"@gabigabi.ph"}}
+];
+const LN={ig:"Instagram",tt:"TikTok",fb:"Facebook",web:"Website",shop:"Online shop"};
+const $=s=>document.querySelector(s);
+const norm=s=>s.toLowerCase().replace(/[^a-z0-9]/g,"");
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function lev(a,b){const m=[];for(let i=0;i<=a.length;i++){m[i]=[i];}for(let j=1;j<=b.length;j++)m[0][j]=j;
+for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return m[a.length][b.length]}
+let saved=new Set(),mem="[]";
+try{saved=new Set(JSON.parse(localStorage.getItem("neckline-saved")||"[]"))}catch(e){}
+function persist(){try{localStorage.setItem("neckline-saved",JSON.stringify([...saved]))}catch(e){}}
+let style="",onlySaved=false;
+brands.forEach((b,i)=>{b.i=i;b.col=COL[i%COL.length]});
+const mk=b=>`<div class="mark" style="background:${b.col}" aria-hidden="true">${esc(b.n.split(" ").map(w=>w[0]).slice(0,2).join(""))}</div>`;
+function score(b,q){if(!q)return 1;const n=norm(b.n);
+if(n===q)return 100;if(n.startsWith(q))return 80;if(n.includes(q))return 60;
+if(q.length>=4&&lev(n.slice(0,q.length+1),q)<=1||q.length>=4&&lev(n,q)<=2)return 40;
+if(norm(b.s.join("")+b.c+b.t+(b.it||[]).join("")).includes(q))return 20;return 0}
+function render(){
+const q=norm($("#q").value),city=$("#city").value,pr=$("#price").value,so=$("#sort").value;
+let r=brands.map(b=>({b,s:score(b,q)})).filter(x=>x.s>0)
+.filter(x=>(!style||x.b.s.includes(style))&&(!city||x.b.c===city)&&(!pr||x.b.p==pr)&&(!onlySaved||saved.has(x.b.i)));
+if(so==="new")r.sort((a,b)=>a.b.d-b.b.d);else if(so==="az")r.sort((a,b)=>a.b.n.localeCompare(b.b.n));else r.sort((a,b)=>b.s-a.s||a.b.n.localeCompare(b.b.n));
+$("#count").textContent=r.length+(r.length===1?" brand":" brands")+(q?" matching “"+$("#q").value.trim()+"”":"");
+$("#grid").innerHTML=r.length?r.map(({b})=>`<div class="card" tabindex="0" role="button" data-i="${b.i}" aria-label="Open ${esc(b.n)}">
+<div class="top">${mk(b)}<div><h3>${esc(b.n)}</h3><div class="meta">${esc(b.c)} · ${"₱".repeat(b.p)}</div></div>
+<button class="save" data-s="${b.i}" aria-label="${saved.has(b.i)?"Remove from saved":"Save"} ${esc(b.n)}">${saved.has(b.i)?"♥":"♡"}</button></div>
+<p class="desc">${esc(b.t)}</p>
+<div class="badges">${b.d<=14?'<span class="b n">New</span>':""}${b.v?'<span class="b v">Verified</span>':'<span class="b">Pending check</span>'}${b.pending?'<span class="b">Pending review</span>':""}${b.s.map(x=>`<span class="b">${x}</span>`).join("")}</div></div>`).join("")
+:`<div class="empty"><h3>No brand with that name yet</h3><p>Check the spelling on the tag, or clear a filter. Know a brand we're missing? Tell us and we'll add it.</p><button class="btn pri" onclick="$('#addDlg').showModal()">List a brand</button></div>`}
+function openDlg(i){const b=brands[i];
+$("#dlg").innerHTML=`<div class="dlg"><div class="top">${mk(b)}<div><h2>${esc(b.n)}</h2><div class="meta">${esc(b.c)} · ${"₱".repeat(b.p)} · ${b.s.join(", ")}</div></div></div>
+<p class="desc">${esc(b.t)}</p><h3 class="sub">Find them online</h3><div class="links">${Object.keys(b.l).map(k=>{const u=b.l[k],h=u.startsWith("@");return `<a href="${h?"#":esc(u)}" data-go="${h?"#":esc(u)}" data-msg="Open ${esc(b.n)}’s ${LN[k]}?"><span>${LN[k]}</span><span>${h?esc(u):"Visit"}</span></a>`}).join("")}</div>
+<h3 class="sub">Browse pieces</h3>${items(b)}
+<div class="row"><button class="btn" id="rep">Report this brand</button><button class="btn pri" id="cl">Close</button></div></div>`;
+$("#dlg").showModal();$("#cl").onclick=()=>$("#dlg").close();$("#rep").onclick=()=>{$("#dlg").close();toast("Report sent. We'll review this brand.")}}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2400)}
+function init(){
+const cities=[...new Set(brands.map(b=>b.c))].sort();$("#city").innerHTML='<option value="">Any location</option>'+cities.map(c=>`<option>${c}</option>`).join("");
+const ss=["All styles",...new Set(brands.flatMap(b=>b.s))];
+$("#styles").innerHTML=ss.map((s,i)=>`<button class="chip" aria-pressed="${i==0}" data-st="${i?s:""}">${s}</button>`).join("");
+const ok=brands.filter(b=>b.v),day=Math.floor(Date.now()/864e5),sp=ok[day%ok.length];
+$("#spot").innerHTML=`${mk(sp)}<div><small>Brand of the day</small><h2>${esc(sp.n)}</h2><p>${esc(sp.t)}</p></div><button class="btn" data-i="${sp.i}">See links</button>`;
+$("#spot .btn").onclick=()=>goBrand(sp.i);render()}
+$("#q").oninput=render;["city","price","sort"].forEach(id=>$("#"+id).onchange=render);
+$("#styles").onclick=e=>{const b=e.target.closest("[data-st]");if(!b)return;style=b.dataset.st;document.querySelectorAll("#styles .chip").forEach(c=>c.setAttribute("aria-pressed",c===b));render()};
+$("#savedOnly").onclick=e=>{onlySaved=!onlySaved;e.currentTarget.setAttribute("aria-pressed",onlySaved);render()};
+$("#grid").onclick=e=>{const s=e.target.closest("[data-s]");if(s){const i=+s.dataset.s;saved.has(i)?saved.delete(i):saved.add(i);persist();render();return}
+const c=e.target.closest(".card");if(c)goBrand(+c.dataset.i)};
+$("#grid").onkeydown=e=>{if(e.key==="Enter"&&e.target.classList.contains("card"))goBrand(+e.target.dataset.i)};
+$("#addBtn").onclick=()=>$("#addDlg").showModal();$("#cancel").onclick=()=>$("#addDlg").close();
+$("#form").onsubmit=e=>{const f=new FormData(e.target),l={};
+if(f.get("ig"))l.ig=f.get("ig");if(f.get("web"))l.web=f.get("web");
+const i=brands.length;brands.push({n:f.get("name"),c:f.get("city"),s:[f.get("style")],p:1,v:0,d:0,pending:1,t:"New brand, waiting for review.",l:Object.keys(l).length?l:{web:"#"},i,col:COL[i%COL.length]});
+e.target.reset();init();toast("Sent for review. It will go live once approved.")};
+const IT={0:["Heavy cotton tee|Black, sand","Farmer cap|Olive","Island hoodie|Washed grey"],1:["Woven everyday shirt|Natural, indigo","Wrap dress|Rust, sage"],2:["Lazy Sunday tee|Cream, black","Oversized crew|Navy"],3:["Modern barong|White, ivory","Office polo barong|Navy"],5:["Quick-dry running tee|Teal, black","Surf shorts|Coral"],7:["Loose-fit top|Sand, olive","Long skirt|Brown"],9:["Night market tee|Black, yellow","Soft crop tee|White"]};
+Object.entries(IT).forEach(([i,a])=>brands[i].it=a);
+function items(b){return b.it?`<div class="items">${b.it.map(s=>{const [n,c]=s.split("|");return `<a class="item" href="#" data-go="#" data-msg="Open “${esc(n)}” on ${esc(b.n)}’s site?"><span class="sw" style="background:${b.col}" aria-hidden="true"></span><span><b>${esc(n)}</b><br><span class="meta">${esc(c)}</span></span><span class="meta">View</span></a>`}).join("")}</div><p class="meta" style="margin:0">Opens on ${esc(b.n)}’s own site. Check size and price there.</p>`:`<p class="meta" style="margin:0">This brand hasn’t added pieces yet.</p>`}
+const slug=b=>b.n.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+function goBrand(i){location.hash="brand-"+slug(brands[i])}
+function renderBrand(b){$("#p-brand").innerHTML=`<a class="back" href="#home">‹ All brands</a>
+<div class="bhead">${mk(b)}<div><h1>${esc(b.n)}</h1><div class="meta">${esc(b.c)} · ${"₱".repeat(b.p)} · ${b.s.join(", ")}${b.v?" · Verified":""}</div></div></div>
+<p class="lead" style="margin-bottom:24px">${esc(b.t)}</p>
+<h2>Pieces from ${esc(b.n)}</h2>${items(b)}
+<h2 style="margin-top:28px">Find them online</h2><div class="links">${Object.keys(b.l).map(k=>{const u=b.l[k],h=u.startsWith("@");return `<a href="${h?"#":esc(u)}" data-go="${h?"#":esc(u)}" data-msg="Open ${esc(b.n)}’s ${LN[k]}?"><span>${LN[k]}</span><span>${h?esc(u):"Visit"}</span></a>`}).join("")}</div>
+<div class="row" style="justify-content:flex-start;margin-top:22px"><button class="btn" id="repB">Report this brand</button></div>`;
+$("#repB").onclick=()=>toast("Report sent. We’ll review this brand.")}
+let goU="";
+document.addEventListener("click",e=>{const a=e.target.closest("[data-go]");if(!a)return;e.preventDefault();goU=a.dataset.go;$("#goTxt").textContent=a.dataset.msg;$("#goDlg").showModal()});
+document.addEventListener("click",e=>{const b=e.target.closest(".dd>button");document.querySelectorAll(".dd>button").forEach(x=>x.setAttribute("aria-expanded",String(x===b&&x.getAttribute("aria-expanded")!=="true")))});
+addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".dd>button").forEach(x=>x.setAttribute("aria-expanded","false"))});
+document.addEventListener("click",e=>{const x=e.target.closest("[data-ex]");if(!x)return;const [k,v]=x.dataset.ex.split(":");
+if(k==="brand"){location.hash="brand-"+v;return}if(k==="list"){$("#addDlg").showModal();return}
+location.hash="home";route();if(k==="q"){$("#q").value=v;render();$("#q").focus()}if(k==="st"){const c=document.querySelector('#styles [data-st="'+v+'"]');if(c)c.click()}});
+$("#fbForm").onsubmit=e=>{e.preventDefault();e.target.reset();toast("Thanks for the feedback. In this demo, messages aren’t sent anywhere yet.")};
+const BASE="",BASE2="";
+const WK=(id,items)=>{$(id).innerHTML=items.map(([f,t,s])=>`<a class="wcard" href="${f.startsWith("act")?BASE2:BASE}${f}_argabio.html" target="_blank" rel="noopener"><b>${t}</b><span class="meta">${s||"Open page"} ›</span></a>`).join("")};
+WK("#wkAct",[["act1","About Me Page","Activity 1"],["act2","Styled Article","Activity 2"],["act3","Philippines: Places Worth Visiting","Activity 3"],["act4","HTML Basics Quiz","Activity 4"],["act5","My Picture Gallery","Activity 5"]]);
+WK("#wkExe",[["exe1","My First Webpage","Exercise 1"],["exe2","Personal Details Table","Exercise 2"],["exe3","About Myself","Exercise 3"],["exe4","FONT Tag Attributes","Exercise 4"],["exe5","Links and Text","Exercise 5"],["exe5_1","Poem: Whispers of the Morning","Exercise 5 · page 2"],["exe6","My 5 Top Favorite Quotes","Exercise 6"],["exe6_1","Our School’s Computer Laboratory","Exercise 6 · page 2"],["exe7","Lists and Links","Exercise 7"],["exe7_1","Ordered and Unordered Lists","Exercise 7 · page 2"],["exe8","Image Gallery","Exercise 8"],["exe8_1","More Lists","Exercise 8 · page 2"]]);
+$("#goNo").onclick=()=>$("#goDlg").close();
+$("#goYes").onclick=()=>{$("#goDlg").close();if(goU&&goU!=="#")window.open(goU,"_blank","noopener");else toast("Sample link. A real brand would open its own page.")};
+init();
+const GR=[["history","org","about"],["activities","exercises"]],TL={history:"History",org:"Organizational chart",about:"Profile",activities:"Activities",exercises:"Exercises"},PG=["about","history","org","activities","exercises","services","owners","contact","brand"],TT={home:"Tatak: find the brand behind the tag",about:"Profile | Tatak",history:"History | Tatak",org:"Organizational chart | Tatak",activities:"Activities | Tatak",exercises:"Exercises | Tatak",services:"Services | Tatak",contact:"Contact | Tatak",owners:"List your brand on Tatak"};
+function route(){const h=location.hash.slice(1),bm=h.startsWith("brand-")&&brands.find(b=>slug(b)===h.slice(6)),on=bm?"brand":PG.includes(h)&&h!=="brand"?h:"home";if(bm)renderBrand(bm);const g=GR.find(x=>x.includes(on));if(g)$("#p-"+on+" .tabs").innerHTML=g.map(k=>`<a href="#${k}"${k===on?' aria-current="page"':""}>${TL[k]}</a>`).join("");
+$("#home").hidden=on!=="home";PG.forEach(p=>$("#p-"+p).hidden=p!==on);
+document.querySelectorAll("nav a").forEach(a=>a.toggleAttribute("aria-current",a.getAttribute("href")==="#"+on));document.querySelectorAll(".dd").forEach(d=>d.querySelector("button").toggleAttribute("aria-current",!!d.querySelector(".menu [aria-current]")));
+document.title=bm?bm.n+" on Tatak":TT[on];window.scrollTo(0,0)}
+addEventListener("hashchange",route);route();
+$("#ownersAdd").onclick=()=>$("#addDlg").showModal();
+</script>
+</body>
+</html>
